@@ -1,0 +1,32 @@
+{% extends 'templates/base.html' %}
+{% block content %}
+<section class="d-flex flex-column justify-content-center align-items-center p-5" id='posts'>
+    <div class="card w-75">
+        <h1 class="card-header">Publicar</h1>
+        <form class=" px-5" action="" method="post">
+            {% csrf_token %}
+                {% comment %} <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div> {% endcomment %}
+                <div class="form-group pt-4 pb-3">
+                  <label class="py-1">Título del post</label>
+                  <input type="text" class="form-control" name="title" placeholder="ej: Cómo hacer la web de asw">
+                  {% comment %} <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> {% endcomment %}
+                </div>
+                <div class="form-group ">
+                  <label class="py-1">Contenido</label>
+                  <textarea type="text" class="form-control" rows="6" name="content" placeholder="El contenido del post va aquí..."></textarea>
+                </div>
+                <div class="form-group py-3">
+                  <label class="py-1">URL</label>
+                  <input type="url" class="form-control" name="url" placeholder="ej: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url">
+                </div>
+              
+                <input type="submit" value="Publicar" class="my-4 btn btn-primary  "/>
+        </form>
+        <p class="text-center mb-1"></p>
+    </div>
+</section>
+{% endblock %}

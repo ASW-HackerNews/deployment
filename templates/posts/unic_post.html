@@ -1,0 +1,150 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+{% extends 'templates/base.html' %} {% block content %}
+<section class="d-flex flex-column justify-content-center p-5" id="posts">
+  <div class="d-flex flex-row card w-100 mb-3" style="overflow: hidden">
+    <div class="d-flex flex-column w-100">
+      {% if post.ask.title or post.link.title %}
+      <h2
+        class="card-header d-flex justify-content-between"
+        style="background-color: #90ee90"
+      >
+        <a>{% firstof post.ask.title post.link.title %}</a>
+        {% if post.link.url %}
+
+        <a href="{{ post.link.url }}"
+          ><button class="btn btn-primary">
+            Ir al link del artículo
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-link"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"
+              />
+              <path
+                d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"
+              />
+            </svg></button
+        ></a>
+        {% endif %}
+      </h2>
+      {% endif %}
+      {% if post.content %}
+        {% if not post.link.url %}
+          <p
+            class="m-3"
+            style="
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            "
+          >
+            {{post.content}}
+          </p>
+        {% endif %}
+      {% endif %}
+      <div class="card-footer d-flex w-100 justify-content-between px-2 py-0">
+        <div
+          class="d-flex d-column justify-content-center align-items-center h-100"
+        >
+          <a href="{% url 'profile_user' user.username %}"
+            ><button class="btn btn-light rounded-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-person"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
+                />
+              </svg>
+              @{{post.user}}
+            </button></a
+          >
+          <button class="btn btn-light rounded-0">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-clock"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"
+              />
+              <path
+                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"
+              />
+            </svg>
+            {{post.created_at}}
+          </button>
+        </div>
+        <div class="px-2">
+          <a href="{% url 'like' post.id %}" class="text-decoration-none">
+            <button
+              class="btn btn-primary rounded-circle border border-success"
+              style="height: 3rem; width: 3rem; background-color: #fff"
+              onclick="changestyle(this)"
+            >
+              {% if post.id in liked_posts%} 💚 {% else %} 🤍 {% endif %}
+            </button>
+          </a>
+          <em class="text-center">{{post.likes}} likes</em>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card">
+      <h3 class="card-header">Commenta</h3>
+      <form class="p-4 mb-0" action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <textarea
+            type="text"
+            class="form-control"
+            rows="10"
+            name="content"
+            placeholder="El contenido del comentario va aquí..."
+          ></textarea>
+        </div>
+        <a href="{% url 'unic_post' post.id %}">
+          <button class="btn btn-primary mt-3"><strong>Comenta</strong></button>
+        </a>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <h3>Comentarios</h3>
+  <hr />
+  <div>
+
+    {% for comment, replies in comments.items %} 
+    {% comment %} {% if comment.commented == post %} {% endcomment %}
+      {% url 'like' comment.id as like_href %}
+      {% url 'unic_post' comment.id as post_href %}
+      {% include "posts/comment.html" with comment=comment replies=replies liked_posts=liked_posts like_href=like_href post_href=post_href margin=0 %}
+    {% comment %} {% endif %}  {% endcomment %}
+    {% endfor %} 
+    {% if not comments %} 
+    <center><h5 class="" style="color:#9094b;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-emoji-laughing" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      <path d="M12.331 9.5a1 1 0 0 1 0 1A4.998 4.998 0 0 1 8 13a4.998 4.998 0 0 1-4.33-2.5A1 1 0 0 1 4.535 9h6.93a1 1 0 0 1 .866.5zM7 6.5c0 .828-.448 0-1 0s-1 .828-1 0S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 0-1 0s-1 .828-1 0S9.448 5 10 5s1 .672 1 1.5z"/>
+    </svg> ¡Haz el primer comentario!</h5></center>
+    {% endif %}
+  </div>
+  {% endblock %}
+</section>

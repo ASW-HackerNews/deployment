@@ -1,0 +1,48 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+<section class="d-flex flex-column justify-content-center align-items-center p-5" id='posts'>
+    <div class="card">
+        <h1 class="card-header">Login</h1>
+        <div class="px-5">
+          <form class="" action="" method="post">
+              {% csrf_token %}
+                  {% comment %} <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                  </div> {% endcomment %}
+                  <div class="form-group pt-4 pb-3">
+                    <label for="exampleInputUser">Nombre de usuario</label>
+                    <input type="text" class="form-control" name="username" aria-describedby="usernameHelp" placeholder="ej: fiber">
+                    {% comment %} <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> {% endcomment %}
+                  </div>
+                  <div class="form-group ">
+                    <label for="exampleInputPassword1">Contraseña</label>
+                    <input type="password" class="form-control" name="password" placeholder="Contraseña">
+                  </div>
+                
+                  <input type="submit" value="Login" class="my-4 btn btn-primary  w-100"/>
+          </form>
+          <a class="fab fa-google size_social text_info text-decoration-none" href="{% provider_login_url "google" %}">
+            <button class="btn border border-primary w-100 d-flex justify-content-evenly" style="color:#0D6EFD;">
+              <svg class="my-auto" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+              </svg>
+              <strong style="">Login with Google</strong>
+            </button>
+          </a>
+          
+          <div class="bottom-container d-flex flex-column justify-content-center">
+            <p class="text-center mb-1 pt-3">¿No tienes una cuenta?</p>
+            <a class="text-center mb-5" href="register">Crea una cuenta</a>
+          </div>
+        </form>
+
+    </div>
+
+</section>
+{% endblock %}

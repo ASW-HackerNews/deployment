@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends 'templates/base.html' %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-center p-5" id='posts'>
+
+  {% if posts %}
+    {% for post in posts %}
+    
+      <div class='d-flex flex-row card w-100 mb-3' href="{% url 'unic_post' post.id %}" style="overflow:hidden;">
+        <div class='d-flex flex-column justify-content-evenly align-items-center p-2' 
+          style="{% if post.comment.commented %} background-color: #161F2D; color:#fff;  
+                 {% else %} background-color: #90ee90;  {% endif %}">
+          <strong class="h4">{{forloop.counter}} </strong>
+          <a href="{% url 'like' post.id %}">
+            <button class='btn btn-primary rounded-circle border border-success' style="height:3rem; width:3rem; background-color:#fff">
+                {% if post.id in liked_posts%}
+                💚
+                {% else %}
+                🤍
+                {% endif %}
+            </button>
+          </a>
+          <em  class="text-center">{{post.likes}} likes</em>
+        </div>
+        <div class="d-flex flex-column w-100 {% if post.comment.commented %} justify-content-between {% endif %}" >
+          {% if not post.comment.commented %}
+          <h3 class="card-header d-flex justify-content-between">
+            <a href="{% url 'unic_post' post.id %}" class="text-decoration-none text-dark " >{% firstof post.ask.title post.link.title %}</a>
+            {% if post.link.url %}
+
+            <a href="{{ post.link.url }} " target="_blank"><button class="btn btn-primary">Ir al link del artículo <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-link" viewBox="0 0 16 16">
+              <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
+              <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
+            </svg></button></a>
+            {% endif %}
+          </h3>
+          {% endif %}
+          <p class="m-3" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; text-overflow: ellipsis;
+                                overflow: hidden;">
+            {{post.content}}
+          </p>
+          <p class="m-0 card-footer py-0">
+            <a href="../user/profile/{{post.user}}"><button  class='btn btn-light rounded-0'><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+            </svg> @{{post.user}}</button></a>
+            <button class='btn btn-light rounded-0'><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+              <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+            </svg> {{post.created_at}}</button> 
+            {% if post.comment.commented %} 
+            <a href = "{% url 'unic_post' post.id %}"  >
+              <button class='btn btn-light rounded-0 text-primary'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0d6efd" class="bi bi-reply" viewBox="0 0 16 16">
+                  <path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z"/>
+                </svg>
+            {% else %}
+            <a href = "{% url 'unic_post' post.id %}" >
+              <button class='btn btn-light rounded-0'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16">
+                  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                  <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg> 
+                {% endif %}
+                Comentarios 
+              </button>
+            </a>
+
+          </div>
+
+      </div>
+    {% endfor %}
+  {% else %}
+  <center><h3 class="" style="color:#9094b;"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-emoji-neutral" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5zm3-4C7 5.672 6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8s1-.672 1-1.5zm4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5S9.448 8 10 8s1-.672 1-1.5z"/>
+  </svg> No hay posts por mostrar</h3></center>
+  {% endif %}
+
+</section>
+{% endblock %}

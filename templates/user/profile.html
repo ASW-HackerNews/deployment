@@ -1,0 +1,125 @@
+{% extends 'templates/base.html' %} {% block content %}
+<section
+  class="d-flex flex-column justify-content-center align-items-center p-5"
+  id="posts"
+>
+  <div class="card w-25">
+    <h2
+      class="card-header d-flex flex-column align-items-center bg-primary pt-3"
+      style="color: #fff"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="80"
+        fill="currentColor"
+        class="bi bi-person-circle"
+        viewBox="0 0 16 16"
+      >
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+        <path
+          fill-rule="evenodd"
+          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+        />
+      </svg>
+      {{ user.username }}
+    </h2>
+    <div class="p-5">
+      <h4>Correo:</h4>
+      {{user.email}}
+      <h4 class="pt-2">Fecha de creación:</h4>
+      {{user.date_joined}} {% if user.is_authenticated and request.session.username == user.username%}
+      <a
+        href="{% url 'edit_profile' %}"
+        class="text-light text-decoration-none"
+      >
+        <button class="btn btn-primary w-100 my-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-pencil-square"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+            />
+          </svg>
+          <strong>Edita Perfil</strong>
+        </button>
+      </a>
+      {% endif %}
+      <hr />
+      <div class="d-flex flex-column">
+        <a
+          href="{% url 'usersubmissions' user %}"
+          class="text-light text-decoration-none m-0"
+        >
+          <button class="btn btn-light w-100">
+            <strong>Submissions</strong></button
+          >>
+        </a>
+        <a
+          href="{% url 'usercomments' user %}"
+          class="text-light text-decoration-none m-0"
+        >
+          <button class="btn btn-light w-100">
+            <strong>Commentarios</strong></button
+          >>
+        </a>
+        {% if user.is_authenticated %}
+        <h4>Favoritos</h4>
+
+        <a
+          href="{% url 'uservoted_posts' %}"
+          class="text-light text-decoration-none"
+        >
+          <button class="btn btn-light w-100">
+            <strong> Posts Favoritos</strong>
+          </button>
+        </a>
+
+        <a
+          href="{% url 'uservoted_comments' %}"
+          class="text-light text-decoration-none mt-4"
+        >
+          <button class="btn btn-light w-100">
+            <strong> Comentarios Favoritos</strong>
+          </button>
+        </a>
+        <a
+          href="{% url 'uservoted' %}"
+          class="text-light text-decoration-none mt-4"
+        >
+          <button class="btn btn-light w-100" style="background-color: #90ee90">
+            <strong
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="#9094b"
+                class="bi bi-search-heart"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"
+                />
+                <path
+                  d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"
+                />
+              </svg>
+              Todos los Favoritos</strong
+            >
+          </button>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

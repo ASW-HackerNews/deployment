@@ -1,0 +1,195 @@
+:root{
+    --primary-color:#2BCD63;
+    --dark-blue:#131A26;
+    --dark-blue-2:#161F2D;  
+  }
+  
+  *{
+    margin:0;
+    padding: 0;
+  }
+  
+  
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--dark-blue);
+    font-size: large;
+  }
+  
+  em{
+    color:var(--primary-color);
+  }
+  
+  a:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  
+
+.container
+{
+  margin: auto;
+  width: 100%;
+  /* max-width: 60%; */
+  height: 100vh;
+  background-color: var(--dark-blue-2);
+}
+
+.menu{
+  display: flex;
+  height: fit-content;
+  padding: 2rem;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+}
+
+#title{
+  color: var(--dark-blue-2);
+}
+nav{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center ;
+}
+
+
+.page{
+  text-decoration: none;
+  color: #000;
+  height: 100%;
+  margin: 0 1.5rem;
+}
+
+.page:hover{  
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+
+.post{
+  padding: 2rem;
+  font-size: 1.3rem;
+  border-radius: 0.7rem;
+
+  margin: 2rem auto;
+  max-width: 60%;
+  display: flex;
+  flex-flow:row nowrap;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 26px -12px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 26px -12px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 26px -12px rgba(0,0,0,0.75);  
+
+
+}
+
+.id{
+  font-size: 1.5rem;
+  padding: 0 1rem 0 0;
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+  border-right: 2px solid rgb(154, 154, 154);
+
+}
+
+.id > em{
+  font-size: 1rem;
+}
+
+section
+{
+  max-width: 1500px;
+  margin: auto;
+}
+
+.like{
+  margin-top: 0.5rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1.3rem;
+  transition: all ease-in 0.2s;
+  
+}
+.like:hover{
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: all ease-in 0.1s;
+}
+
+
+
+.comments-btn{
+  margin-top: 0.5rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1.3rem;
+}
+
+.comments-btn:hover{
+  cursor: pointer;
+  text-decoration: underline;
+  transition: all ease-in 0.2s;
+}
+
+.content{
+  padding: 0 1rem;
+}
+
+/* CSS */
+#login-btn {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  transition: all ease-in 0.2s;
+}
+
+#login-btn:hover,
+#login-btn:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: var(--primary-color);
+  transition: all ease-in 0.2s;
+}
+
+#login-btn:active {
+  opacity: .5;
+}
+
+
+@media only screen and (max-width: 1050px) {
+
+  .post{
+    max-width: 100%;
+    margin: 2rem;
+  }
+}
+

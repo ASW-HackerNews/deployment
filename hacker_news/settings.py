@@ -10,6 +10,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
+import socket
+def get_ipaddress(): 
+    
+   host_name = socket.gethostname()
+   ip_address = socket.gethostbyname(host_name) 
+   return "http://"+ip_address+":8000"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +29,7 @@ SECRET_KEY = 'django-insecure-*ht^)k1p@srm^mf_!n^$#^pw4z!p^ya$=no9t@6$c%#ix&#h#4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS=[get_ipaddress()]
 ALLOWED_HOSTS = ['*']
 
 # Application definition
